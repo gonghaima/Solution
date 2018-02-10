@@ -1,14 +1,14 @@
 Instruction
-1. Build & Run webapi project - confirm the api is available via http://localhost:49795/api/movies
+1. Backend - Build & Run webapi project - confirm the api is available via http://localhost:49795/api/movies
 	Install-Package Moq -Version 4.8.1 for CommSec.Api.Movie.Tests project
-	add references/Extentions  microsoft.visualstudio.qualitytools.unittestframework
+	Add references/Extentions  microsoft.visualstudio.qualitytools.unittestframework
 	Install-Package Microsoft.AspNet.WebApi.Cors    for CommSec.Api.Movie project
 	Install-Package Castle.Windsor -Version 4.1.0
 	In CommSec.Api.Movie project, add reference of CommSec.Api.Movie project
 	In CommSec.Api.Movie.Tests project, add reference to MoviesLibrary.dll
 	In CommSec.Api.Movie.Tests project, System.Web.Http.dll
-2. in cmd console, cd to CommSecMovieNG folder, npm install
-3. then run  ng serve , website will be availabe via http://localhost:4200
+2. Frontend - in cmd console, cd to CommSecMovieNG folder, npm install
+3. Run  ng serve , website will be availabe via http://localhost:4200
 4. CORS is enabled, website should running after .net services' up, but if there is any cors issue, please install cors extension & enabled it from chrome https://chrome.google.com/webstore/search/cors?utm_source=chrome-ntp-icon
 
 Done:
@@ -34,12 +34,12 @@ Integration:
 Backlog:
 1. karma/jasmine Unit test
 2. protracter end end to end test
-3. Paging, and lazy load data.
-4. Ngrx to manage storage, instead of my own storage service.
-5. Use local storage & session storage to reduce the server load & network traffic cost, enhancement of UI/UX.
+3. paging, and lazy load data.
+4. ngrx to manage storage, instead of my own storage service.
+5. use local storage & session storage to reduce the server load & network traffic cost, enhancement of UI/UX.
 6. client side: user authentication & oauth token - (JWT token) verification
 7. dedicated auth server for validation, ensure "EnableCors" not in production.
-8. Use mock data server (json-server, node, etc) to supply data, further decouple the dependencies between frontend and backend.
+8. use mock data server (json-server, node, etc) to supply data, further decouple the dependencies between frontend and backend.
 9. ngrx store for local state management.
 10. abstract url to api list - (put into environment.prod.ts for production)
 
