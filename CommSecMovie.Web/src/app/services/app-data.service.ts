@@ -49,8 +49,8 @@ export class AppDataService {
     return Observable.of({})
       .delay(2000)
       .do(e =>
-        this.movies.splice(
-          this.movies.findIndex(c => c._movieId === _movieId),
+        this.storageService.movies.splice(
+          this.storageService.movies.findIndex(c => c._movieId === _movieId),
           1
         )
       );
