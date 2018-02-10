@@ -29,9 +29,9 @@ namespace CommSec.Api.Movie.Repository
             this.moviesLibraryDS.Update(movieData);
         }
 
-        void IMovieRepo.Put(int id, MovieData movieData)
+        void IMovieRepo.Create(MovieData movieData)
         {
-            this.moviesLibraryDS.Update(movieData);
+            this.moviesLibraryDS.Create(movieData);
         }
     }
 }

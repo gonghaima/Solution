@@ -8,6 +8,6 @@ namespace CommSec.Api.Movie.Repository
         bool Delete(string id);
         List<MovieData> Get();
         void Post(MovieData movieData);
-        void Put(int id, MovieData movieData);
+        void Create(MovieData movieData);
     }
 }

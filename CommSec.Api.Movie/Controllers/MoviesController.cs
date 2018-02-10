@@ -5,6 +5,9 @@ using System.Web.Http.Cors;
 using CommSec.Api.Movie.Repository;
 using System.Web.UI;
 using System.Web.Mvc;
+using System.Linq;
+using System;
+using System.Reflection;
 
 namespace CommSec.Api.Movie.Controllers
 {
@@ -21,6 +24,7 @@ namespace CommSec.Api.Movie.Controllers
 
         //IMovieRepo movieRepo;
         private readonly IMovieRepo movieRepo;
+        public List<MovieData> movieList;
 
         public MoviesController(IMovieRepo movieRepository)
         {
@@ -30,10 +34,33 @@ namespace CommSec.Api.Movie.Controllers
         // GET api/values
         [System.Web.Http.HttpGet]
         [OutputCache(Duration = 86400, VaryByParam = "none", Location = OutputCacheLocation.ServerAndClient)]
-        public List<MovieData> Get()
+        public List<MovieData> Get(string orderBy = "")
         {
-            var movieList = movieRepo.Get();
+            movieList = movieRepo.Get();
+            if (orderBy != string.Empty)
+            {
+                movieList = OrderMovies(movieList, orderBy);
+            }
             return movieList;
+        }
+
+        public List<MovieData> OrderMovies(List<MovieData> movieList, string keyword)
+        {
+            var propertyInfo = movieList.First().GetType().GetProperty(keyword, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+            return movieList.OrderBy(e => propertyInfo.GetValue(e, null)).ToList();
+        }
+
+        [System.Web.Http.HttpGet]
+        [OutputCache(Duration = 86400, VaryByParam = "none", Location = OutputCacheLocation.ServerAndClient)]
+        public List<MovieData> Search(string k)
+        {
+            var searchResult = this.movieList.Where(record => record.Cast.Contains(k) ||
+            record.Classification.Contains(k) ||
+            record.Genre.Contains(k) ||
+            record.Rating.ToString().Contains(k) ||
+            record.ReleaseDate.ToString().Contains(k) ||
+            record.Title.Contains(k)).ToList();
+            return searchResult;
         }
 
         [System.Web.Http.HttpPost]
@@ -41,13 +68,6 @@ namespace CommSec.Api.Movie.Controllers
         {
             movieRepo.Post(value);
         }
-
-
-        //[System.Web.Http.HttpPut]
-        //public void Put(int id, [FromBody]MovieData value)
-        //{
-        //    movieRepo.Put(id, value);
-        //}
 
         [System.Web.Http.HttpDelete]
         public bool Delete(string id)
