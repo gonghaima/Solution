@@ -1,4 +1,7 @@
-﻿using System.Net.Http.Headers;
+﻿using Castle.MicroKernel.Registration;
+using Castle.Windsor;
+using CommSec.Api.Movie.Repository;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -22,6 +25,8 @@ namespace CommSec.Api.Movie
                 defaults: new { id = RouteParameter.Optional }
             );
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            var container = new WindsorContainer();
+            container.Register(Component.For<IMovieRepo>().ImplementedBy<MovieRepo>());
         }
     }
 }

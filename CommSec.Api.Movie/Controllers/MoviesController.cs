@@ -10,7 +10,6 @@ namespace CommSec.Api.Movie.Controllers
 {
 
     [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
-    //[EnableCors(origins: "http://localhost:4200",headers: "accept,content-type,origin,x-my-header", methods: "get,post,put,delete")]
     public class MoviesController : ApiController
     {
         // Below is just the sample code from the Visual Studio Web Api Template. 
@@ -20,15 +19,12 @@ namespace CommSec.Api.Movie.Controllers
 
         // MoviesLibrary is referenced in this project from ../packages/MoviesLibrary.1.0.0/MoviesLibrary.dll. You can restructure this solution as you like.
 
-        IMovieRepo movieRepo;
-        public MoviesController()
-        {
-            movieRepo = new MovieRepo();
-        }
+        //IMovieRepo movieRepo;
+        private readonly IMovieRepo movieRepo;
 
         public MoviesController(IMovieRepo movieRepository)
         {
-            movieRepo = movieRepository;
+            this.movieRepo = movieRepository;
         }
 
         // GET api/values
