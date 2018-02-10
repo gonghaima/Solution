@@ -1,0 +1,55 @@
+<div class="container">
+  <h3 class="text-center">Movie List</h3>
+  <div class="form-inline">
+    <div class="row header-container">
+      <button class="btn btn-primary col-md-3 pull-left" (click)="createMovie()">Add New Movie</button>
+      <input [(ngModel)]="searchText" placeholder="search..." class="form-control form-control-sm col-md-4 pull-right">
+    </div>
+  </div>
+
+  <table class="text-center col-md-12">
+    <thead>
+      <tr>
+        <th class="col-md-1">Id</th>
+        <th class="col-md-2">Movie Title</th>
+        <th class="col-md-1">Genre</th>
+        <th class="col-md-1">Classification</th>
+        <th class="col-md-1">ReleaseDate</th>
+        <th class="col-md-1">Rating</th>
+        <th class="col-md-2">Cast</th>
+        <th class="col-md-3"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of movies | filter : searchText">
+        <td>{{ row._movieId }}</td>
+        <td>{{ row._title }}</td>
+        <td>{{ row._genre }}</td>
+        <td>{{ row._classification }}</td>
+        <td>{{ row._releaseDate }}</td>
+        <td>{{ row._rating }}</td>
+        <td>{{ row._cast }}</td>
+        <td *ngIf="row._movieId != deleteId">
+          <button class="btn btn-sm btn-primary" (click)="showMovieDetail(row._movieId)">
+            Details
+          </button>
+          <button class="btn btn-sm btn-warning" (click)="editMovie(row._movieId)">
+            Edit
+          </button>
+          <button class="btn btn-sm btn-danger" (click)="deleteMovieQuestion(row._movieId)">
+            Delete
+          </button>
+        </td>
+        <td *ngIf="row._movieId === deleteId && !isDeleting">
+          Delete this movie?
+          <button class="btn btn-sm" (click)="cancelDelete()">Cancel</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteMovie(row._movieId)">Delete</button>
+          <p *ngIf="deleteError">{{ deleteError }}</p>
+        </td>
+        <td *ngIf="row._movieId === deleteId && isDeleting">
+          Deleting...
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

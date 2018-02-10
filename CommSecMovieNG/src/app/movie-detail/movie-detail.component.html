@@ -1,0 +1,10 @@
+<h3>Movie</h3>
+<fw-dynamic-form
+  [vm]="movie"
+  [vmDefinition]="movieDefinition"
+  [operation]="operation"
+  [errorMessage]="errorMessage"
+  (update)="updateMovie($event)"
+  (create)="createMovie($event)"
+>
+</fw-dynamic-form>
