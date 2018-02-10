@@ -19,12 +19,8 @@ export class MovieDetailComponent implements OnInit {
   errorMessage: string;
   operation: string;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private dataService: AppDataService,
-    private storageService: StorageService
-  ) {}
+  // tslint:disable-next-line:max-line-length
+  constructor(private route: ActivatedRoute, private router: Router, private dataService: AppDataService, private storageService: StorageService) {}
 
   createMovie(movie: Movie) {
     movie._movieId = 0;
@@ -42,15 +38,7 @@ export class MovieDetailComponent implements OnInit {
 
     if (this.operation === 'create') {
       // tslint:disable-next-line:max-line-length
-      this.movie = {
-        _movieId: 0,
-        _cast: 13,
-        _classification: 'PG',
-        _genre: 'few',
-        _rating: 18,
-        _releaseDate: 219,
-        _title: 'Social network'
-      };
+      this.movie = {_movieId: 0, _cast: 0, _classification: '', _genre: '', _rating: 0, _releaseDate: 0, _title: ''};
     } else {
       this.movie = this.storageService.getMovie(
         this.route.snapshot.params['id']

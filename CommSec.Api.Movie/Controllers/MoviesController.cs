@@ -60,7 +60,7 @@ namespace CommSec.Api.Movie.Controllers
             movieRepo.Post(value);
         }
 
-        [System.Web.Http.HttpPost]
+        [System.Web.Http.HttpPut]
         public void Create([FromBody]MovieData value)
         {
             movieRepo.Create(value);

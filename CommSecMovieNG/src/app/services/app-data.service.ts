@@ -69,23 +69,9 @@ export class AppDataService {
   }
 
   updateMovie(updatedMovie: Movie): Observable<any> {
-    // const movie = this.movies.find(c => c._movieId === updatedMovie._movieId);
-
-    // const movie = this.storageService.movies.find(c => c._movieId === updatedMovie._movieId);
-    // this.httpClient.put(`${this.apiRoot}/api/movies`, updatedMovie);
-    // debugger;
-    // Object.assign(movie, updatedMovie);
-    // return Observable.of(movie).delay(2000);
-
     const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
 
     return this.httpClient.post(`${this.apiRoot}/api/movies`,
       updatedMovie);
-
-    // const movie = this.storageService.movies.find(
-    //   c => c._movieId === updatedMovie._movieId
-    // );
-    // Object.assign(movie, updatedMovie);
-    // return Observable.of(movie).delay(2000);
   }
 }
