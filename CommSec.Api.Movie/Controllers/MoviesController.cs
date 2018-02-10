@@ -6,8 +6,8 @@ using CommSec.Api.Movie.Repository;
 using System.Web.UI;
 using System.Web.Mvc;
 using System.Linq;
-using System;
 using System.Reflection;
+using CommSec.Api.Movie.Services;
 
 namespace CommSec.Api.Movie.Controllers
 {
@@ -24,11 +24,13 @@ namespace CommSec.Api.Movie.Controllers
 
         //IMovieRepo movieRepo;
         private readonly IMovieRepo movieRepo;
+        private readonly IMovieHelper movieHelper;
         public List<MovieData> movieList;
 
-        public MoviesController(IMovieRepo movieRepository)
+        public MoviesController(IMovieRepo movieRepository, IMovieHelper movieHelper)
         {
             this.movieRepo = movieRepository;
+            this.movieHelper = movieHelper;
         }
 
         // GET api/values
@@ -39,34 +41,29 @@ namespace CommSec.Api.Movie.Controllers
             movieList = movieRepo.Get();
             if (orderBy != string.Empty)
             {
-                movieList = OrderMovies(movieList, orderBy);
+                movieList = this.movieHelper.OrderMovies(movieList, orderBy);
             }
             return movieList;
-        }
-
-        public List<MovieData> OrderMovies(List<MovieData> movieList, string keyword)
-        {
-            var propertyInfo = movieList.First().GetType().GetProperty(keyword, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-            return movieList.OrderBy(e => propertyInfo.GetValue(e, null)).ToList();
         }
 
         [System.Web.Http.HttpGet]
         [OutputCache(Duration = 86400, VaryByParam = "none", Location = OutputCacheLocation.ServerAndClient)]
         public List<MovieData> Search(string k)
         {
-            var searchResult = this.movieList.Where(record => record.Cast.Contains(k) ||
-            record.Classification.Contains(k) ||
-            record.Genre.Contains(k) ||
-            record.Rating.ToString().Contains(k) ||
-            record.ReleaseDate.ToString().Contains(k) ||
-            record.Title.Contains(k)).ToList();
-            return searchResult;
+            return this.movieHelper.Search(this.movieList,k);
         }
+
 
         [System.Web.Http.HttpPost]
         public void Post([FromBody]MovieData value)
         {
             movieRepo.Post(value);
+        }
+
+        [System.Web.Http.HttpPost]
+        public void Create([FromBody]MovieData value)
+        {
+            movieRepo.Create(value);
         }
 
         [System.Web.Http.HttpDelete]

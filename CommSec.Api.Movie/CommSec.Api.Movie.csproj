@@ -135,6 +135,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IMovieRepo.cs" />
     <Compile Include="Repository\MovieRepo.cs" />
+    <Compile Include="Services\IMovieHelper.cs" />
+    <Compile Include="Services\MovieHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
